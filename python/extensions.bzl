@@ -6,8 +6,10 @@ def _poetry_impl(module_ctx):
             poetry_parse(
                 name = attr.name,
                 lock = attr.lock,
+                lock_by_platform = attr.lock_by_platform,
                 generate_extras = attr.generate_extras,
                 platforms = attr.platforms,
+                extra_pip_args = attr.extra_pip_args,
             )
 
 poetry = module_extension(
@@ -17,8 +19,10 @@ poetry = module_extension(
             attrs = {
                 "name": attr.string(mandatory = True),
                 "lock": attr.label(mandatory = True),
+                "lock_by_platform": attr.string_keyed_label_dict(mandatory = False),
                 "generate_extras": attr.bool(default = True),
                 "platforms": attr.string_dict(),
+                "extra_pip_args": attr.string_list(),
             },
         ),
     },

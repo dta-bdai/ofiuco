@@ -75,6 +75,8 @@ def _package_impl(ctx):
     ]
     arguments += ["--source_url={}".format(url) for url in ctx.attr.source_urls]
     arguments += ["--index={}".format(url) for url in ctx.attr.extra_index_urls]
+    for pip_arg in ctx.attr.extra_pip_args:
+        arguments.append("--extra_pip_args={}".format(pip_arg))
 
     for platform in platform_tags:
         arguments += ["--platform", platform]
@@ -135,6 +137,7 @@ package = rule(
         "files": attr.string_dict(doc = "The package resolved files"),
         "source_urls": attr.string_list(doc = "The source file URLs"),
         "extra_index_urls": attr.string_list(doc = "The extra repository index"),
+        "extra_pip_args": attr.string_list(doc = "Extra args for pip install"),
         "markers": attr.string(doc = "The JSON string with a dictionary of dependency markers accordingly to PEP 508"),
         "platforms": attr.string_dict(
             default = _DEFAULT_PLATFORMS,

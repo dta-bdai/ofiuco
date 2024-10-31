@@ -112,6 +112,9 @@ def install(args):
 
     install_args.append(f"--cache-dir={possible_cache}" if use_cache else "--no-cache-dir")
 
+    if args.extra_pip_args:
+        install_args += args.extra_pip_args
+
     install_args += [
         f"--target={output_path}",
         "--prefer-binary",
@@ -188,6 +191,7 @@ if __name__ == "__main__":
     parser_install.add_argument("--python_version", type=str, default=None, help="python version")
     parser_install.add_argument("--platform", type=str, nargs="*", action="extend", help="platform tag")
     parser_install.add_argument("--index", type=str, nargs="*", action="extend", help="index URL")
+    parser_install.add_argument("--extra_pip_args", type=str, nargs="*", action="extend", help="extra args for pip install")
     parser_install.add_argument("--source_url", type=str, nargs="*", action="extend", help="source URLs")
     parser_install.add_argument("--cc_toolchain", type=str, help="CC toolchain")
 
